@@ -22,3 +22,5 @@ target
 .idea
 *.iml
 *.log.gz
+
+target/
