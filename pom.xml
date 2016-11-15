@@ -92,7 +92,10 @@
 							<goal>package</goal>
 						</goals>
 					</execution>
-				</executions>				
+				</executions>
+				<configuration>
+					<mainClass>br.com.fws.contact_app_backend.Boot</mainClass>
+				</configuration>				
 			</plugin>
 		</plugins>
 	</build>
