@@ -68,12 +68,20 @@
 		</dependency>
 
 		<!--Swagger -->
+		<!-- https://mvnrepository.com/artifact/io.swagger/swagger-jaxrs -->
 		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>swagger</artifactId>
-			<version>${version.wildfly.swarm}</version>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.10</version>
 		</dependency>
-		
+
+		<!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.5.10</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -81,7 +89,7 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<plugins>			
+		<plugins>
 			<plugin>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
@@ -95,7 +103,7 @@
 				</executions>
 				<configuration>
 					<mainClass>br.com.fws.contact_app_backend.Boot</mainClass>
-				</configuration>				
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

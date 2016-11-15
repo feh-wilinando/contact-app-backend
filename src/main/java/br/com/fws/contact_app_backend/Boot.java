@@ -6,7 +6,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.datasources.DatasourcesFraction;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
-import org.wildfly.swarm.swagger.SwaggerArchive;
 
 public class Boot {
 
@@ -27,14 +26,7 @@ public class Boot {
 		
 		swarm.start();
 		
-		JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
-		
-		
-		
-		
-		SwaggerArchive swaggerArchive = deployment.as(SwaggerArchive.class);						
-		swaggerArchive.setResourcePackages("br.com.fws.contact_app_backend");									
-		swaggerArchive.setPrettyPrint(true);
+		JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);				
 		
 		ClassLoader classLoader = Boot.class.getClassLoader();
         
