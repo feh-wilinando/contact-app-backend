@@ -44,12 +44,7 @@ public class Contato {
 	}
 	
 	public List<Telefone> getTelefones() {
-		
-		List<Telefone> result = new ArrayList<>();
-		
-		Collections.copy(result , telefones);
-		
-		return result;
+		return Collections.unmodifiableList(telefones);
 	}
 	
 	public void setTelefones(List<Telefone> telefone) {
@@ -62,13 +57,14 @@ public class Contato {
 		this.endereco = endereco;
 	}
 	
-	public List<PerfilSocial> getPerfisSociais() {
-		List<PerfilSocial> result = new ArrayList<>();
-		
-		Collections.copy(result , perfisSociais);
-		
-		return result;
-	}	
+	
+	public List<PerfilSocial> getPerfisSociais() {		
+		return Collections.unmodifiableList(perfisSociais);
+	}
+	
+	public void setPerfisSociais(List<PerfilSocial> perfisSociais) {
+		this.perfisSociais = perfisSociais;
+	}
 	
 	public void add(Telefone telefone) {
 		telefones.add(telefone);		
