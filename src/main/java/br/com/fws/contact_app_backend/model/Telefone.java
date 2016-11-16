@@ -77,7 +77,10 @@ public class Telefone {
 		return true;
 	}
 	
-	
+	enum Tipo {
+
+		CASA,TRABALHO,CELULAR,PARA_CONTATO,OUTRO;
+	}
 	
 	
 }

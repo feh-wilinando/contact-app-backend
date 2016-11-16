@@ -77,6 +77,10 @@ public class PerfilSocial {
 		return true;
 	}
 	
-	
+	enum RedeSocial {
+
+		TWITTER,INSTAGRAM,GOOGLE_PLUS,FACEBOOK;
+		
+	}
 	
 }
