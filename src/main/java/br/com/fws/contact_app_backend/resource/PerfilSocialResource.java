@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ResponseHeader;
 
 @Api("Perfis Sociais")
-@Path("contatos/{id}/perfis-sociais")
+@Path("contatos/{id:\\d+}/perfis-sociais")
 public class PerfilSocialResource {
 	
 	@Inject private ContatoDao dao;
@@ -70,6 +70,8 @@ public class PerfilSocialResource {
 		
 		if (!dao.hasId(id)) return Response.noContent().build();
 		
+		perfilSocialDao.add(perfilSocial);
+		
 		Contato contato = dao.findById(id);
 		contato.add(perfilSocial);
 		
@@ -81,7 +83,7 @@ public class PerfilSocialResource {
 	}
 	
 	@DELETE
-	@Path("idPerfilSocial:\\d+")
+	@Path("{idPerfilSocial:\\d+}")
 	@Transactional
 	@ApiOperation(value="Remover perfil social do contato")
 	@ApiResponses({
@@ -104,7 +106,13 @@ public class PerfilSocialResource {
 			
 		if (optionalPerfilSocial.isPresent()) {
 			
-			perfilSocialDao.delete(optionalPerfilSocial.get());
+			PerfilSocial perfilSocial = optionalPerfilSocial.get();
+			
+			contato.remove(perfilSocial);
+			
+			perfilSocialDao.delete(perfilSocial);
+			
+			dao.update(contato);
 			
 			return Response.ok().build();
 		}else{
@@ -114,7 +122,7 @@ public class PerfilSocialResource {
 	}
 	
 	@PUT
-	@Path("idPerfilSocial:\\d+")
+	@Path("{idPerfilSocial:\\d+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional

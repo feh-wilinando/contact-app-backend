@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ResponseHeader;
 
-@Api("Contatos")
+@Api(value="Contatos")
 @Path("contatos")
 public class ContatoResource {
 
@@ -87,7 +87,7 @@ public class ContatoResource {
 	@Transactional
 	@ApiOperation(value="Remover contato por id")
 	@ApiResponses({
-				@ApiResponse(code=200, message="Contato removido"),
+				@ApiResponse(code=200, message="Contato removido", response=Void.class),
 				@ApiResponse(code=204, message="Contato não encontrado")
 	})
 	public Response removerPorId(@ApiParam(value="ID contato", name="id", required=true) @PathParam("id") Long id){
@@ -108,7 +108,7 @@ public class ContatoResource {
 	@Transactional
 	@ApiOperation(value="Atualizar contato com id", produces=MediaType.APPLICATION_JSON, consumes=MediaType.APPLICATION_JSON)
 	@ApiResponses({
-				@ApiResponse(code=200, message="Contato Atualizado"),
+				@ApiResponse(code=200, message="Contato Atualizado", response=Contato.class),
 				@ApiResponse(code=204, message="Contato não encontrado")
 	})
 	public Response atualizar( @ApiParam(value="ID contato", name="id", required=true) @PathParam("id") Long id, 

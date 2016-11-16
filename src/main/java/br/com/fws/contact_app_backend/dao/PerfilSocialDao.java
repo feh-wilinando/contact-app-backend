@@ -17,5 +17,9 @@ public class PerfilSocialDao {
 	public void update(PerfilSocial perfilSocial) {
 		manager.merge(perfilSocial);
 	}
+	
+	public void add(PerfilSocial perfilSocial){
+		manager.persist(perfilSocial);
+	}
 
 }

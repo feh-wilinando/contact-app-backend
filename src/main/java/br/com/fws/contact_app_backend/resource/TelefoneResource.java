@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ResponseHeader;
 
 @Api("Telefones")
-@Path("contatos/{id}/telefones")
+@Path("contatos/{id:\\d+}/telefones")
 public class TelefoneResource {
 	
 	@Inject private ContatoDao dao;
@@ -61,7 +61,7 @@ public class TelefoneResource {
 	@ApiResponses({
 			@ApiResponse(	code=201,
 							message="Telefone adicionado", 
-							response=Contato.class, 
+							response=Void.class, 
 							responseHeaders=@ResponseHeader(name="Location", description="uri para novo telefone do contato", response=String.class)
 						),
 			@ApiResponse(	code=204, message="Contato não encontrado" )
@@ -70,6 +70,8 @@ public class TelefoneResource {
 								@ApiParam(value="Telefone", name="telefone", required=true) Telefone telefone){
 		
 		if (!dao.hasId(id)) return Response.noContent().build();
+		
+		telefoneDao.add(telefone);
 		
 		Contato contato = dao.findById(id);
 		contato.add(telefone);
@@ -82,11 +84,11 @@ public class TelefoneResource {
 	}
 	
 	@DELETE
-	@Path("idTelefone:\\d+")
+	@Path("{idTelefone:\\d+}")
 	@Transactional
 	@ApiOperation(value="Remover telefone do contato")
 	@ApiResponses({
-				@ApiResponse(code=200, message="Telefone removido"),
+				@ApiResponse(code=200, message="Telefone removido", response=Void.class),
 				@ApiResponse(code=204, message="Contato ou telefone não encontrado")
 	})
 	public Response remover( @ApiParam(value="ID do contato", name="id", required=true) @PathParam("id") Long id,
@@ -105,7 +107,12 @@ public class TelefoneResource {
 			
 		if (optionalTelefone.isPresent()) {
 			
-			telefoneDao.delete(optionalTelefone.get());
+			Telefone telefone = optionalTelefone.get();
+			contato.remove(telefone);
+
+			telefoneDao.delete(telefone);			
+			
+			dao.update(contato);
 			
 			return Response.ok().build();
 		}else{
@@ -115,13 +122,13 @@ public class TelefoneResource {
 	}
 	
 	@PUT
-	@Path("idTelefone:\\d+")
+	@Path("{idTelefone:\\d+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional
 	@ApiOperation(value="Atualizar telefone do contato", consumes=MediaType.APPLICATION_JSON, produces=MediaType.APPLICATION_JSON)
 	@ApiResponses({
-				@ApiResponse(code=200, message="Telefone atualizado"),
+				@ApiResponse(code=200, message="Telefone atualizado", response=Telefone.class),
 				@ApiResponse(code=204, message="Contato ou perfil não encontrado")
 	})
 	public Response atualizar(	@ApiParam(value="ID do contato", name="id", required=true) @PathParam("id") Long id, 

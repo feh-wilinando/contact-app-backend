@@ -73,6 +73,17 @@ public class Contato {
 	public void add(PerfilSocial perfilSocial){
 		perfisSociais.add(perfilSocial);
 	}
+	public void remove(Telefone telefone) {
+		if (telefones.contains(telefone)) {
+			telefones.remove(telefone);
+		}
+		
+	}
+	public void remove(PerfilSocial perfilSocial) {
+		if (perfisSociais.contains(perfilSocial)) {
+			perfisSociais.remove(perfilSocial);
+		}
+	}
 	
 	
 }

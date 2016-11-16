@@ -10,7 +10,7 @@ public class TelefoneDao {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public void delete(Telefone telefone) {
+	public void delete(Telefone telefone) {		
 		manager.remove(telefone);		
 	}
 
@@ -18,6 +18,8 @@ public class TelefoneDao {
 		manager.merge(telefone);	
 	}
 	
-	 
+	public void add(Telefone telefone){
+		manager.persist(telefone);
+	}
 	
 }
