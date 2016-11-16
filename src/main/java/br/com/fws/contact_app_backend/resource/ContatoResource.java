@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ResponseHeader;
 
-@Api(value="Contatos")
+@Api("Contatos")
 @Path("contatos")
 public class ContatoResource {
 
@@ -83,7 +83,7 @@ public class ContatoResource {
 	}
 	
 	@DELETE
-	@Path("id:\\d+")
+	@Path("{id:\\d+}")
 	@Transactional
 	@ApiOperation(value="Remover contato por id")
 	@ApiResponses({
@@ -102,7 +102,7 @@ public class ContatoResource {
 	}
 	
 	@PUT
-	@Path("id:\\d+")
+	@Path("{id:\\d+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Transactional

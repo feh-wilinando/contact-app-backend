@@ -21,6 +21,7 @@ import br.com.fws.contact_app_backend.dao.ContatoDao;
 import br.com.fws.contact_app_backend.dao.PerfilSocialDao;
 import br.com.fws.contact_app_backend.model.Contato;
 import br.com.fws.contact_app_backend.model.PerfilSocial;
+import br.com.fws.contact_app_backend.model.Telefone;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -38,11 +39,12 @@ public class PerfilSocialResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiResponses(
-			@ApiResponse(	code=200,
-							message="Listagem com sucesso",
-							response=PerfilSocial.class
-						)
-				 ) 					
+		@ApiResponse(	code=200,
+						message="Listagem com sucesso",
+						response=PerfilSocial.class
+					)
+	 ) 		
+	
 	@ApiOperation(value="Listar perfis sociais do contato", produces=MediaType.APPLICATION_JSON)
 	public Response listar(@ApiParam(value="ID contato", name="id", required=true) @PathParam("id") Long id){
 		
@@ -51,6 +53,40 @@ public class PerfilSocialResource {
 		List<PerfilSocial> perfisSociais = dao.findById(id).getPerfisSociais();
 				
 		return Response.ok(perfisSociais).build();
+	}
+	
+	
+	@GET
+	@Path("{idPerfilSocial:\\d+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiResponses({
+			@ApiResponse(	code=200,
+							message="Exibido com sucesso",
+							response=Telefone.class
+						),
+			@ApiResponse(	code=204, 
+							message="Contato ou perfil social não encontrado", 
+							response=Void.class
+						)
+	}) 
+	
+	@ApiOperation(value="Exibir um perfil social especifico do contato", produces=MediaType.APPLICATION_JSON)
+	public Response exibirTelefone(	@ApiParam(value="ID do contato", name="id", required=true) @PathParam("id") Long id,
+									@ApiParam(value="ID Perfil Social", name="idPerfilSocial", required=true) @PathParam("idPerfilSocial") Long idPerfilSocial){
+		if (!dao.hasId(id)) return Response.noContent().build();
+		
+		List<PerfilSocial> perfisSociais = dao.findById(id).getPerfisSociais();
+		
+		Optional<PerfilSocial> optionalPerfilSocial = perfisSociais
+														.stream()
+															.filter(p -> p.getId().equals(idPerfilSocial))
+																.findFirst();
+		if (optionalPerfilSocial.isPresent()) {			
+			return Response.ok(optionalPerfilSocial.get()).build();
+		}else {
+			return Response.noContent().build();
+		}
+		
 	}
 	
 	@POST

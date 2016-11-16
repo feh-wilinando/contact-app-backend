@@ -54,6 +54,40 @@ public class TelefoneResource {
 		return Response.ok(telefones).build();
 	}
 	
+	@GET
+	@Path("{idTelefone:\\d+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiResponses({
+			@ApiResponse(	code=200,
+							message="Exibido com sucesso",
+							response=Telefone.class
+						),
+			@ApiResponse(	code=204, 
+							message="Contato ou telefone não encontrado", 
+							response=Void.class
+						)
+	}) 
+	
+	@ApiOperation(value="Exibir um telefone especifico do contato", produces=MediaType.APPLICATION_JSON)
+	public Response exibirTelefone(	@ApiParam(value="ID do contato", name="id", required=true) @PathParam("id") Long id,
+									@ApiParam(value="ID Telefone", name="idTelefone", required=true) @PathParam("idTelefone") Long idTelefone){
+		if (!dao.hasId(id)) return Response.noContent().build();
+		
+		List<Telefone> telefones = dao.findById(id).getTelefones();
+		
+		Optional<Telefone> optionalTelefone = telefones
+												.stream()
+													.filter(t -> t.getId().equals(idTelefone))
+														.findFirst();
+		if (optionalTelefone.isPresent()) {			
+			return Response.ok(optionalTelefone.get()).build();
+		}else {
+			return Response.noContent().build();
+		}
+		
+		
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Transactional
