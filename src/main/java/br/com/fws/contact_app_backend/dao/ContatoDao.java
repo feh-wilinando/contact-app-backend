@@ -13,7 +13,7 @@ public class ContatoDao {
 	private EntityManager manager;
 	
 	public List<Contato> listAll() {
-		return manager.createQuery("select c from Contato c join fetch c.telefones t", Contato.class).getResultList();
+		return manager.createQuery("select c from Contato c left join fetch c.telefones t", Contato.class).getResultList();
 	}
 
 	
@@ -23,7 +23,7 @@ public class ContatoDao {
 	
 	public Contato findById(Long id) {
 		return manager
-				.createQuery("select c from Contato c join fetch c.telefones t where c.id = :id", Contato.class)
+				.createQuery("select c from Contato c left join fetch c.telefones t where c.id = :id", Contato.class)
 				.setParameter("id", id)
 				.getSingleResult();
 	}
