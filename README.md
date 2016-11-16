@@ -6,7 +6,7 @@ Was built on wildfly-swarm, and uses _JAX-RS_, _CDI_, _JPA_, _Maven_, _Swagger_ 
 
 ## Usage
 
-Before running application than execute `mvn clean package`.
+Before running application then execute `mvn clean package`.
 
 To running execute `java -jar target/contatc-app-backend-swarm.jar`.
 
